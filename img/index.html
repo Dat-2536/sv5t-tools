@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="vi" data-root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SV5T | Ảnh</title>
+  <meta name="description" content="Làm nét ảnh, chỉnh dung lượng tuỳ thích, xoá vật thể và xoá watermark ngay trên trình duyệt." />
+  <meta name="theme-color" content="#f4f4f5" />
+  <link rel="icon" href="../assets/logo-sv5t.png" />
+  <link rel="stylesheet" href="../style.css?v=15" />
+</head>
+<body>
+  <script src="../vendor/icons.js"></script>
+
+  <div class="bg page-img" aria-hidden="true"><div class="bg-grid"></div><div class="deco-stripe"></div><div class="deco-blob"></div></div>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="../">
+        <img class="brand-logo" src="../assets/logo-sv5t.png" alt="Sinh viên 5 tốt" />
+        <span class="brand-name">SV5T<span>Ảnh</span></span>
+      </a>
+      <nav class="top-actions" aria-label="Chuyển trang">
+        <a class="top-btn" href="../pdf/"><svg class="i"><use href="#i-file-text" /></svg> PDF</a>
+        <a class="top-btn active" href="./"><svg class="i"><use href="#i-file-image" /></svg> Ảnh</a>
+      </nav>
+      <div class="partners">
+        <img src="../assets/logo-Doan.png" alt="Đoàn Thanh niên Cộng sản Hồ Chí Minh" width="28" height="30" />
+        <img src="../assets/logo-bk.png" alt="Trường Đại học Bách khoa TP.HCM" width="30" height="30" />
+        <img src="../assets/logo-Hoi.png" alt="Hội Sinh viên Việt Nam" width="30" height="30" />
+        <img class="wordmark" src="../assets/logo-cse.png" alt="Khoa Khoa học và Kỹ thuật Máy tính" width="38" height="20" />
+      </div>
+    </div>
+  </header>
+
+  <nav class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="sharpen" role="tab"><svg class="i"><use href="#i-sparkles" /></svg><span>Làm nét</span></button>
+      <button class="tab" data-tab="fit" role="tab"><svg class="i"><use href="#i-scaling" /></svg><span>Chỉnh dung lượng</span></button>
+      <button class="tab" data-tab="inpaint" role="tab"><svg class="i"><use href="#i-paintbrush" /></svg><span>Xoá vật thể</span></button>
+      <button class="tab" data-tab="watermark" role="tab"><svg class="i"><use href="#i-eraser" /></svg><span>Xoá watermark</span></button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="panel active" id="panel-sharpen">
+      <label class="drop" data-target="sharpen">
+        <input type="file" multiple accept="image/*,.jfif,.heic,.heif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+      <div class="options">
+        <label>Độ nét: <b id="sh-amount-val">140</b>%
+          <input id="sh-amount" type="range" min="40" max="250" value="140" />
+        </label>
+        <label>Định dạng
+          <select id="sh-format">
+            <option value="image/jpeg">JPG</option>
+            <option value="image/png">PNG</option>
+            <option value="image/webp">WEBP</option>
+          </select>
+        </label>
+      </div>
+      <div class="list" data-list="sharpen"></div>
+      <div class="actions">
+        <button class="ghost" data-clear="sharpen"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="sh-run" disabled>Làm nét</button>
+      </div>
+      <div class="results" id="sh-results"></div>
+    </section>
+
+    <section class="panel" id="panel-fit">
+      <label class="drop" data-target="fit">
+        <input type="file" multiple accept="image/*,.jfif,.heic,.heif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+      <div class="options">
+        <label>Tối thiểu
+          <input id="fit-min" type="text" value="1MB" placeholder="vd. 1MB, 500KB" />
+        </label>
+        <label>Tối đa
+          <input id="fit-max" type="text" value="5MB" placeholder="vd. 5MB" />
+        </label>
+        <label>Phóng to tối đa (lần)
+          <input id="fit-upscale" type="number" min="1" max="4" step="0.05" value="1.15" />
+        </label>
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" id="fit-sharpen" checked /><span>Làm nét nhẹ khi ảnh quá nhỏ</span></label>
+        <label><input type="checkbox" id="fit-pad" checked /><span>Vẫn thiếu thì pad metadata cho đủ (ảnh hiển thị không đổi)</span></label>
+        <label><input type="checkbox" id="fit-wm" /><span>Tự xoá watermark ảnh thẻ myBk nếu phát hiện</span></label>
+      </div>
+      <p class="hint">Nhập khoảng dung lượng tuỳ ý (KB/MB). Ảnh được nén, phóng hoặc pad để nằm trong khoảng.</p>
+      <div class="list" data-list="fit"></div>
+      <div class="actions">
+        <button class="ghost" data-clear="fit"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="fit-run" disabled>Chỉnh dung lượng</button>
+      </div>
+      <div class="results" id="fit-results"></div>
+    </section>
+
+    <section class="panel" id="panel-inpaint">
+      <label class="drop" data-target="inpaint">
+        <input type="file" multiple accept="image/*,.jfif,.heic,.heif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+      <p class="hint">Tô lên vật thể, chữ hoặc vùng cần xoá. Model AI chạy local trên máy bạn.</p>
+      <div class="list" data-list="inpaint"></div>
+      <div class="actions">
+        <button class="ghost" data-clear="inpaint"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="in-run" disabled>Bắt đầu tô ảnh đầu tiên</button>
+      </div>
+      <div class="results" id="in-results"></div>
+    </section>
+
+    <section class="panel" id="panel-watermark">
+      <label class="drop" data-target="watermark">
+        <input type="file" multiple accept="image/*,.jfif,.heic,.heif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+      <div class="options">
+        <label>Cách xoá
+          <select id="wm-mode">
+            <option value="mybk">Tự động: ảnh thẻ myBk (www.hcmut.edu.vn)</option>
+            <option value="brush">Tô vùng watermark, AI vẽ lại</option>
+          </select>
+        </label>
+        <label id="wm-strength-wrap">Độ mạnh: <b id="wm-strength-val">7</b>
+          <input id="wm-strength" type="range" min="1" max="15" value="7" />
+        </label>
+      </div>
+      <div class="list" data-list="watermark"></div>
+      <div class="actions">
+        <button class="ghost" data-clear="watermark"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="wm-run" disabled>Xoá watermark</button>
+      </div>
+      <div class="results" id="wm-results"></div>
+    </section>
+
+    <div class="editor" id="wm-editor" hidden>
+      <div class="toolbar">
+        <strong class="ed-name" id="ed-name"></strong>
+        <label class="range">Cọ <input id="ed-brush" type="range" min="4" max="120" value="28" /></label>
+        <button class="ghost" id="ed-tool"><svg class="i"><use href="#i-paintbrush" /></svg><span>Đang tô</span></button>
+        <button class="ghost" id="ed-clear"><svg class="i"><use href="#i-brush-cleaning" /></svg> Bỏ vùng tô</button>
+        <button class="ghost" id="ed-undo" disabled><svg class="i"><use href="#i-undo-2" /></svg> Hoàn tác</button>
+        <button class="ghost" id="ed-peek"><svg class="i"><use href="#i-eye" /></svg> Giữ để xem gốc</button>
+      </div>
+      <div class="stage-wrap">
+        <div class="stage">
+          <canvas id="ed-img"></canvas>
+          <canvas id="ed-mask"></canvas>
+        </div>
+      </div>
+      <div class="toolbar end">
+        <span class="ed-status" id="ed-status">Tô lên vùng cần xoá rồi bấm "Xoá vùng đã tô".</span>
+        <button class="ghost" id="ed-close"><svg class="i"><use href="#i-x" /></svg> Đóng</button>
+        <button class="ghost accent" id="ed-run"><svg class="i"><use href="#i-sparkles" /></svg> Xoá vùng đã tô</button>
+        <button class="primary" id="ed-save"><svg class="i"><use href="#i-check" /></svg> Lưu &amp; ảnh tiếp</button>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" hidden></div>
+
+  <script src="../core.js"></script>
+  <script src="../vendor/heic2any.min.js"></script>
+  <script src="../vendor/pdf-lib.min.js"></script>
+  <script src="../vendor/pdf.min.js"></script>
+  <script src="../vendor/jszip.min.js"></script>
+  <script src="../mybk-glyph.js"></script>
+  <script src="../watermark.js"></script>
+  <script src="../inpaint.js"></script>
+  <script src="../app.js?v=15"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SV5T Toolkit | PDF &amp; Ảnh</title>
+  <meta name="description" content="Chuyển ảnh sang PDF, gộp PDF, tách PDF, nén ảnh, chỉnh dung lượng và xoá watermark ngay trên trình duyệt. File không được tải lên máy chủ." />
+  <meta name="theme-color" content="#f4f4f5" />
+  <link rel="icon" href="assets/logo-sv5t.png" />
+  <link rel="stylesheet" href="style.css?v=15" />
+</head>
+<body>
+  <script src="vendor/icons.js"></script>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="./">
+        <img class="brand-logo" src="assets/logo-sv5t.png" alt="Sinh viên 5 tốt" />
+        <span class="brand-name">SV5T<span>Toolkit</span></span>
+      </a>
+      <nav class="top-actions" aria-label="Chuyển trang">
+        <a class="top-btn" href="pdf/"><svg class="i"><use href="#i-file-text" /></svg> PDF</a>
+        <a class="top-btn" href="img/"><svg class="i"><use href="#i-file-image" /></svg> Ảnh</a>
+      </nav>
+      <div class="partners">
+        <img src="assets/logo-Doan.png" alt="Đoàn Thanh niên Cộng sản Hồ Chí Minh" width="28" height="30" />
+        <img src="assets/logo-bk.png" alt="Trường Đại học Bách khoa TP.HCM" width="30" height="30" />
+        <img src="assets/logo-Hoi.png" alt="Hội Sinh viên Việt Nam" width="30" height="30" />
+        <img class="wordmark" src="assets/logo-cse.png" alt="Khoa Khoa học và Kỹ thuật Máy tính" width="38" height="20" />
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero compact">
+      <h1>SV5T <em>Toolkit</em></h1>
+    </section>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="img2pdf" role="tab"><svg class="i"><use href="#i-file-image" /></svg><span>Ảnh sang PDF</span></button>
+      <button class="tab" data-tab="merge" role="tab"><svg class="i"><use href="#i-files" /></svg><span>Gộp PDF</span></button>
+      <button class="tab" data-tab="split" role="tab"><svg class="i"><use href="#i-split" /></svg><span>Tách PDF</span></button>
+      <button class="tab" data-tab="compress" role="tab"><svg class="i"><use href="#i-shrink" /></svg><span>Nén ảnh</span></button>
+      <button class="tab" data-tab="fit" role="tab"><svg class="i"><use href="#i-scaling" /></svg><span>Chỉnh dung lượng</span></button>
+      <button class="tab" data-tab="watermark" role="tab"><svg class="i"><use href="#i-eraser" /></svg><span>Xoá watermark</span></button>
+    </div>
+
+    <!-- Ảnh sang PDF -->
+    <section class="panel active" id="panel-img2pdf">
+      <label class="drop" data-target="img2pdf">
+        <input type="file" multiple accept="image/*,.jfif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+
+      <div class="options">
+        <label>Chế độ
+          <select id="i2p-mode">
+            <option value="each">Mỗi ảnh thành 1 PDF (cùng tên)</option>
+            <option value="one">Gộp tất cả ảnh vào 1 PDF</option>
+          </select>
+        </label>
+        <label>Khổ trang
+          <select id="i2p-page">
+            <option value="image">Theo kích thước ảnh</option>
+            <option value="a4">A4 (tự xoay dọc/ngang, căn giữa)</option>
+          </select>
+        </label>
+        <label>Chất lượng ảnh
+          <select id="i2p-quality">
+            <option value="original">Giữ nguyên</option>
+            <option value="compress">Nén nhẹ (JPEG 80%, tối đa 2000px)</option>
+          </select>
+        </label>
+        <label id="i2p-name-wrap" hidden>Tên file
+          <input id="i2p-name" type="text" value="tong-hop" />
+        </label>
+      </div>
+
+      <div class="list" data-list="img2pdf"></div>
+      <div class="actions">
+        <button class="ghost" data-sort="img2pdf"><svg class="i"><use href="#i-arrow-down-a-z" /></svg> Sắp xếp theo tên</button>
+        <button class="ghost" data-clear="img2pdf"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="i2p-run" disabled>Chuyển sang PDF</button>
+      </div>
+      <div class="results" id="i2p-results"></div>
+    </section>
+
+    <!-- Gộp PDF -->
+    <section class="panel" id="panel-merge">
+      <label class="drop" data-target="merge">
+        <input type="file" multiple accept="application/pdf,image/*,.jfif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả PDF hoặc ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+
+      <div class="options">
+        <label>Tên file kết quả
+          <input id="merge-name" type="text" value="da-gop" />
+        </label>
+      </div>
+
+      <div class="list" data-list="merge"></div>
+      <div class="actions">
+        <button class="ghost" data-sort="merge"><svg class="i"><use href="#i-arrow-down-a-z" /></svg> Sắp xếp theo tên</button>
+        <button class="ghost" data-clear="merge"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="merge-run" disabled>Gộp PDF</button>
+      </div>
+      <div class="results" id="merge-results"></div>
+    </section>
+
+    <!-- Tách PDF -->
+    <section class="panel" id="panel-split">
+      <label class="drop" data-target="split" id="split-drop">
+        <input type="file" accept="application/pdf" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả PDF vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+
+      <div id="split-workspace" hidden>
+        <div class="item split-file">
+          <span class="thumb"><svg class="i"><use href="#i-file-text" /></svg></span>
+          <div class="meta">
+            <div class="name" id="split-file-name"></div>
+            <div class="size" id="split-file-info"></div>
+          </div>
+          <div class="btns">
+            <button type="button" data-clear="split" title="Xóa"><svg class="i"><use href="#i-x" /></svg></button>
+          </div>
+        </div>
+
+        <div class="split-thumbs" id="split-thumbs"></div>
+        <p class="hint">Bấm trang để chọn hoặc bỏ chọn. Giữ Shift để chọn khoảng. Các trang đang chọn được viền cam.</p>
+
+        <div class="split-range-head">
+          <strong>Khoảng trang</strong>
+          <button type="button" class="ghost" id="split-add-range">Thêm khoảng</button>
+        </div>
+        <div class="split-range-list" id="split-range-list"></div>
+
+        <div class="options">
+          <label>Trang
+            <input id="split-pages" type="text" placeholder="vd. 1-3,5-6" />
+          </label>
+          <label>Tên file
+            <input id="split-name" type="text" />
+          </label>
+        </div>
+        <div class="checks">
+          <label><input type="checkbox" id="split-merge" checked /><span>Gộp mọi khoảng thành 1 PDF</span></label>
+        </div>
+        <div class="actions">
+          <button class="ghost" data-clear="split"><svg class="i"><use href="#i-trash-2" /></svg> Xóa file</button>
+          <button class="primary" id="split-run" disabled>Tách PDF</button>
+        </div>
+      </div>
+      <div class="list" data-list="split" hidden></div>
+      <div class="results" id="split-results"></div>
+    </section>
+
+    <!-- Nén ảnh -->
+    <section class="panel" id="panel-compress">
+      <label class="drop" data-target="compress">
+        <input type="file" multiple accept="image/*,.jfif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+
+      <div class="options">
+        <label>Cách nén
+          <select id="c-mode">
+            <option value="target">Theo dung lượng tối đa</option>
+            <option value="quality">Theo chất lượng</option>
+          </select>
+        </label>
+        <label id="c-target-wrap">Tối đa (KB)
+          <input id="c-target" type="number" min="10" step="10" value="500" />
+        </label>
+        <label id="c-quality-wrap" hidden>Chất lượng: <b id="c-quality-val">75</b>%
+          <input id="c-quality" type="range" min="10" max="100" value="75" />
+        </label>
+        <label>Cạnh dài tối đa (px, 0 = giữ)
+          <input id="c-maxdim" type="number" min="0" step="100" value="0" />
+        </label>
+        <label>Định dạng
+          <select id="c-format">
+            <option value="image/jpeg">JPG</option>
+            <option value="image/webp">WEBP</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="list" data-list="compress"></div>
+      <div class="actions">
+        <button class="ghost" data-clear="compress"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="c-run" disabled>Nén ảnh</button>
+      </div>
+      <div class="results" id="c-results"></div>
+    </section>
+
+    <!-- Chỉnh dung lượng theo khoảng -->
+    <section class="panel" id="panel-fit">
+      <label class="drop" data-target="fit">
+        <input type="file" multiple accept="image/*,.jfif,application/pdf,.pdf" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh hoặc PDF vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+
+      <div class="options">
+        <label>Tối thiểu
+          <input id="fit-min" type="text" value="1MB" placeholder="vd. 1MB, 500KB" />
+        </label>
+        <label>Tối đa
+          <input id="fit-max" type="text" value="5MB" placeholder="vd. 5MB" />
+        </label>
+        <label>Phóng to tối đa (lần)
+          <input id="fit-upscale" type="number" min="1" max="4" step="0.05" value="1.15" />
+        </label>
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" id="fit-sharpen" checked /><span>Làm nét nhẹ khi ảnh quá nhỏ</span></label>
+        <label><input type="checkbox" id="fit-pad" checked /><span>Vẫn thiếu thì pad metadata cho đủ (ảnh hiển thị không đổi)</span></label>
+        <label><input type="checkbox" id="fit-wm" /><span>Tự xoá watermark ảnh thẻ myBk nếu phát hiện</span></label>
+        <label><input type="checkbox" id="fit-pdf-charm" checked /><span>PDF quá nhẹ: in chìm ảnh bùa may mắn phía dưới nội dung, opacity 0% (không che chữ)</span></label>
+        <label><input type="checkbox" id="fit-pdf-pad" checked /><span>PDF vẫn thiếu: pad dữ liệu sau file, trang xem không đổi</span></label>
+      </div>
+      <p class="hint">Làm nét, phóng to và watermark chỉ áp cho ảnh. PDF được nén hoặc pad riêng để vào khoảng dung lượng.</p>
+
+      <div class="list" data-list="fit"></div>
+      <div class="actions">
+        <button class="ghost" data-clear="fit"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="fit-run" disabled>Chỉnh dung lượng</button>
+      </div>
+      <div class="results" id="fit-results"></div>
+    </section>
+
+    <!-- Xoá watermark -->
+    <section class="panel" id="panel-watermark">
+      <label class="drop" data-target="watermark">
+        <input type="file" multiple accept="image/*,.jfif" hidden />
+        <span class="drop-icon"><svg class="i"><use href="#i-upload" /></svg></span>
+        <span class="drop-title">Kéo thả ảnh vào đây hoặc <u>bấm để chọn</u></span>
+      </label>
+
+      <div class="options">
+        <label>Cách xoá
+          <select id="wm-mode">
+            <option value="mybk">Tự động: ảnh thẻ myBk (www.hcmut.edu.vn)</option>
+            <option value="brush">Tô vùng cần xoá, AI vẽ lại</option>
+          </select>
+        </label>
+        <label id="wm-strength-wrap">Độ mạnh: <b id="wm-strength-val">7</b>
+          <input id="wm-strength" type="range" min="1" max="15" value="7" />
+        </label>
+      </div>
+      <div class="list" data-list="watermark"></div>
+      <div class="actions">
+        <button class="ghost" data-clear="watermark"><svg class="i"><use href="#i-trash-2" /></svg> Xóa hết</button>
+        <button class="primary" id="wm-run" disabled>Xoá watermark</button>
+      </div>
+
+      <div class="editor" id="wm-editor" hidden>
+        <div class="toolbar">
+          <strong class="ed-name" id="ed-name"></strong>
+          <label class="range">Cọ <input id="ed-brush" type="range" min="4" max="120" value="28" /></label>
+          <button class="ghost" id="ed-tool"><svg class="i"><use href="#i-paintbrush" /></svg><span>Đang tô</span></button>
+          <button class="ghost" id="ed-clear"><svg class="i"><use href="#i-brush-cleaning" /></svg> Bỏ vùng tô</button>
+          <button class="ghost" id="ed-undo" disabled><svg class="i"><use href="#i-undo-2" /></svg> Hoàn tác</button>
+          <button class="ghost" id="ed-peek"><svg class="i"><use href="#i-eye" /></svg> Giữ để xem gốc</button>
+        </div>
+        <div class="stage-wrap">
+          <div class="stage">
+            <canvas id="ed-img"></canvas>
+            <canvas id="ed-mask"></canvas>
+          </div>
+        </div>
+        <div class="toolbar end">
+          <span class="ed-status" id="ed-status">Tô lên chữ/logo cần xoá rồi bấm "Xoá vùng đã tô".</span>
+          <button class="ghost" id="ed-close"><svg class="i"><use href="#i-x" /></svg> Đóng</button>
+          <button class="ghost accent" id="ed-run"><svg class="i"><use href="#i-sparkles" /></svg> Xoá vùng đã tô</button>
+          <button class="primary" id="ed-save"><svg class="i"><use href="#i-check" /></svg> Lưu &amp; ảnh tiếp</button>
+        </div>
+      </div>
+
+      <div class="results" id="wm-results"></div>
+    </section>
+  </main>
+
+  <div id="toast" hidden></div>
+
+  <script src="core.js"></script>
+  <script src="vendor/heic2any.min.js"></script>
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="vendor/pdf.min.js"></script>
+  <script src="vendor/jszip.min.js"></script>
+  <script src="mybk-glyph.js"></script>
+  <script src="watermark.js"></script>
+  <script src="inpaint.js"></script>
+  <script src="app.js?v=15"></script>
+</body>
+</html>
